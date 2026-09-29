@@ -4,6 +4,11 @@
 <meta charset="UTF-8">
 
 <style>
+
+/* =====================================================
+   BASE
+   ===================================================== */
+
 * {
     box-sizing: border-box;
 }
@@ -21,86 +26,131 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-family: "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
+
+    font-family:
+        "Arial Narrow",
+        "Helvetica Neue",
+        Arial,
+        sans-serif;
 }
 
 
-/* ==================================================
-   CARTEL
-   ================================================== */
+/* =====================================================
+   MARCO PRINCIPAL
+   ===================================================== */
 
 #marco-neon {
     position: relative;
 
     width: 1150px;
-    height: 170px;
+    height: 175px;
 
     display: flex;
     align-items: center;
 
-    /* Oculta el texto al salir del cartel */
     overflow: hidden;
 
     background: transparent;
 
-    border: 3px solid rgba(255, 225, 255, 0.95);
+    border: 3px solid rgba(255, 235, 252, 0.95);
     border-radius: 90px;
 
-    /* Neón del marco */
+    /* NEÓN EXTERIOR */
     box-shadow:
+
+        /* núcleo blanco */
         0 0 2px #ffffff,
-        0 0 6px #ffd7fa,
-        0 0 12px #ff83e6,
-        0 0 24px #ff2bc8,
-        0 0 45px rgba(255, 0, 190, 0.70),
-        0 0 75px rgba(255, 0, 170, 0.30),
 
-        inset 0 0 4px #ffffff,
-        inset 0 0 10px #ff9bec,
-        inset 0 0 22px rgba(255, 0, 190, 0.55);
+        /* rosa claro */
+        0 0 6px #ffd9f8,
+        0 0 11px #ff9be9,
 
-    animation: respirarMarco 4s ease-in-out infinite alternate;
+        /* magenta */
+        0 0 20px #ff4bd1,
+        0 0 35px rgba(255, 0, 190, 0.80),
+
+        /* halo exterior */
+        0 0 60px rgba(255, 0, 180, 0.45),
+        0 0 90px rgba(255, 0, 170, 0.20),
+
+        /* iluminación interior */
+        inset 0 0 3px #ffffff,
+        inset 0 0 9px #ffb4ee,
+        inset 0 0 18px rgba(255, 20, 190, 0.60);
+
+    animation:
+        respirarMarco 4s ease-in-out infinite alternate;
 }
 
 
-/* ==================================================
-   SEGUNDA LÍNEA INTERIOR
-   Da más profundidad al marco
-   ================================================== */
+/* =====================================================
+   SEGUNDO TUBO INTERIOR
+   ===================================================== */
 
 #marco-neon::before {
     content: "";
 
     position: absolute;
 
-    top: 8px;
-    bottom: 8px;
-    left: 8px;
-    right: 8px;
+    top: 9px;
+    bottom: 9px;
+    left: 9px;
+    right: 9px;
 
     border-radius: 80px;
 
-    border: 1px solid rgba(255, 125, 220, 0.45);
+    border: 1px solid rgba(255, 145, 225, 0.45);
 
     box-shadow:
-        inset 0 0 10px rgba(255, 40, 200, 0.30);
+        0 0 5px rgba(255, 90, 215, 0.30),
+        inset 0 0 12px rgba(255, 40, 195, 0.25);
 
     pointer-events: none;
 }
 
 
-/* ==================================================
-   ZONA POR DONDE VIAJA EL TEXTO
-   ================================================== */
+/* =====================================================
+   REFLEJO INTERIOR
+   ===================================================== */
+
+#marco-neon::after {
+    content: "";
+
+    position: absolute;
+
+    left: 6%;
+    right: 6%;
+    top: 18px;
+
+    height: 1px;
+
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255,255,255,0.15),
+        rgba(255,190,240,0.65),
+        rgba(255,255,255,0.15),
+        transparent
+    );
+
+    filter: blur(1px);
+
+    pointer-events: none;
+}
+
+
+/* =====================================================
+   ZONA DEL TEXTO
+   ===================================================== */
 
 #recorrido {
     position: absolute;
 
-    left: 0;
-    top: 0;
-
     width: 100%;
     height: 100%;
+
+    left: 0;
+    top: 0;
 
     display: flex;
     align-items: center;
@@ -109,113 +159,142 @@ body {
 }
 
 
-/* ==================================================
+/* =====================================================
    TEXTO NEÓN
-   ================================================== */
+   ===================================================== */
 
 #bienvenida {
     position: absolute;
 
     left: 0;
 
-    display: inline-block;
-
-    color: #fff7ff;
+    color: #fff8ff;
 
     font-size: 82px;
     font-weight: 300;
-    letter-spacing: 3px;
+
+    letter-spacing: 4px;
 
     white-space: nowrap;
 
-    /* Núcleo + tubo rosa + halo */
+    /* Tubo de neón */
     text-shadow:
+
+        /* CENTRO BLANCO */
         0 0 1px #ffffff,
-        0 0 3px #ffffff,
-        0 0 5px #ffe7fb,
+        0 0 2px #ffffff,
+        0 0 4px #fff5ff,
 
-        0 0 8px #ffb0ed,
-        0 0 13px #ff74df,
+        /* ROSA CLARO */
+        0 0 7px #ffc6f2,
+        0 0 11px #ff94e7,
 
-        0 0 20px #ff35ce,
-        0 0 30px #ff00bd,
+        /* ROSA INTENSO */
+        0 0 17px #ff55d7,
+        0 0 25px #ff1fc6,
 
-        0 0 45px rgba(255, 0, 190, 0.80),
-        0 0 65px rgba(255, 0, 170, 0.50);
+        /* MAGENTA */
+        0 0 38px rgba(255, 0, 190, 0.90),
 
-    /* Recorrido completo: 12 segundos */
+        /* HALO */
+        0 0 55px rgba(255, 0, 180, 0.60),
+        0 0 80px rgba(255, 0, 170, 0.30);
+
+    /*
+       15 SEGUNDOS
+       movimiento continuo
+    */
+
     animation:
-        desplazamiento 12s linear infinite,
-        brilloTexto 2.5s ease-in-out infinite alternate;
+        moverTexto 15s linear infinite,
+        respirarTexto 2.8s ease-in-out infinite alternate;
 
-    will-change: transform, text-shadow;
+    will-change: transform;
 }
 
 
-/* ==================================================
-   MOVIMIENTO
-   ================================================== */
+/* =====================================================
+   MOVIMIENTO DEL TEXTO
+   15 SEGUNDOS
+   ===================================================== */
 
-@keyframes desplazamiento {
+@keyframes moverTexto {
 
-    /* Completamente oculto a la izquierda */
     0% {
         transform: translateX(-105%);
     }
 
-    /* Cruza todo el cartel */
     100% {
         transform: translateX(1150px);
     }
 }
 
 
-/* ==================================================
-   RESPIRACIÓN MUY SUAVE DEL TEXTO
-   ================================================== */
+/* =====================================================
+   PULSACIÓN DEL NEÓN
+   ===================================================== */
 
-@keyframes brilloTexto {
+@keyframes respirarTexto {
 
     0% {
+
         text-shadow:
+
             0 0 1px #ffffff,
-            0 0 3px #ffffff,
-            0 0 5px #ffe7fb,
-            0 0 8px #ffb0ed,
-            0 0 13px #ff74df,
-            0 0 20px #ff35ce,
-            0 0 30px #ff00bd,
-            0 0 45px rgba(255, 0, 190, 0.70),
-            0 0 60px rgba(255, 0, 170, 0.40);
+            0 0 2px #ffffff,
+            0 0 4px #fff5ff,
+
+            0 0 7px #ffc6f2,
+            0 0 11px #ff94e7,
+
+            0 0 17px #ff55d7,
+            0 0 25px #ff1fc6,
+
+            0 0 38px rgba(255,0,190,0.75),
+
+            0 0 55px rgba(255,0,180,0.45),
+            0 0 75px rgba(255,0,170,0.20);
     }
 
+
     100% {
+
         text-shadow:
+
             0 0 2px #ffffff,
             0 0 4px #ffffff,
-            0 0 7px #fff0fd,
-            0 0 11px #ffc0f1,
-            0 0 17px #ff7fe2,
-            0 0 26px #ff35ce,
-            0 0 38px #ff00bd,
-            0 0 55px rgba(255, 0, 190, 0.85),
-            0 0 75px rgba(255, 0, 170, 0.50);
+            0 0 6px #fff5ff,
+
+            0 0 9px #ffd3f6,
+            0 0 14px #ffa0ea,
+
+            0 0 21px #ff60dc,
+            0 0 31px #ff20ca,
+
+            0 0 45px rgba(255,0,195,0.90),
+
+            0 0 65px rgba(255,0,180,0.60),
+            0 0 90px rgba(255,0,170,0.30);
     }
 }
 
 
-/* ==================================================
-   RESPIRACIÓN MUY SUAVE DEL MARCO
-   ================================================== */
+/* =====================================================
+   RESPIRACIÓN DEL MARCO
+   ===================================================== */
 
 @keyframes respirarMarco {
 
-    from {
-        filter: brightness(0.92);
+    0% {
+        filter:
+            brightness(0.94)
+            saturate(0.95);
     }
 
-    to {
-        filter: brightness(1.08);
+    100% {
+        filter:
+            brightness(1.08)
+            saturate(1.08);
     }
 }
 
@@ -224,6 +303,7 @@ body {
 
 
 <body>
+
 
 <div id="marco-neon">
 
@@ -238,31 +318,44 @@ body {
 </div>
 
 
+
 <script>
 
-/* ============================================
-   DATOS RECIBIDOS DESDE UTHERVERSE
-   ============================================ */
+/* =====================================================
+   DATOS DE UTHERVERSE
+   ===================================================== */
 
-const params = new URLSearchParams(window.location.search);
+const params =
+    new URLSearchParams(window.location.search);
 
-const uid = params.get("uid");
+let nombre =
+    params.get("name");
 
-let nombre = params.get("name");
+const uid =
+    params.get("uid");
+
+
+/* Si no llega nombre */
 
 if (!nombre || nombre.trim() === "") {
+
     nombre = "Visitante";
+
 }
 
 
-/* ============================================
-   TEXTO MOSTRADO
-   ============================================ */
+/* =====================================================
+   MENSAJE
+   ===================================================== */
 
-document.getElementById("bienvenida").textContent =
+const texto =
+    document.getElementById("bienvenida");
+
+texto.textContent =
     "BIENVENID@  " + nombre;
 
 </script>
+
 
 </body>
 </html>
