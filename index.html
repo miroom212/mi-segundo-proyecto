@@ -4,11 +4,15 @@
 <meta charset="UTF-8">
 
 <style>
+* {
+    box-sizing: border-box;
+}
 
 html, body {
     width: 100%;
     height: 100%;
     margin: 0;
+    padding: 0;
     overflow: hidden;
     background: transparent !important;
 }
@@ -17,93 +21,201 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-family: "Arial Narrow", Arial, Helvetica, sans-serif;
+    font-family: "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
 }
 
 
-/* =========================
-   MARCO NEÓN ROSA
-   ========================= */
+/* ==================================================
+   CARTEL
+   ================================================== */
 
 #marco-neon {
     position: relative;
 
-    width: 1100px;
-    height: 150px;
+    width: 1150px;
+    height: 170px;
 
     display: flex;
     align-items: center;
 
-    /* IMPORTANTE:
-       impide que las letras salgan fuera del marco */
+    /* Oculta el texto al salir del cartel */
     overflow: hidden;
 
     background: transparent;
 
-    border: 3px solid #ffd5ff;
-    border-radius: 80px;
+    border: 3px solid rgba(255, 225, 255, 0.95);
+    border-radius: 90px;
 
+    /* Neón del marco */
     box-shadow:
-        0 0 3px #ffffff,
-        0 0 6px #ffd5ff,
-        0 0 12px #ff70e8,
-        0 0 22px #ff28cc,
-        0 0 40px rgba(255, 0, 200, 0.85),
-        0 0 65px rgba(255, 0, 180, 0.55),
+        0 0 2px #ffffff,
+        0 0 6px #ffd7fa,
+        0 0 12px #ff83e6,
+        0 0 24px #ff2bc8,
+        0 0 45px rgba(255, 0, 190, 0.70),
+        0 0 75px rgba(255, 0, 170, 0.30),
 
         inset 0 0 4px #ffffff,
-        inset 0 0 10px #ff5ddd,
-        inset 0 0 20px rgba(255, 0, 200, 0.65);
+        inset 0 0 10px #ff9bec,
+        inset 0 0 22px rgba(255, 0, 190, 0.55);
+
+    animation: respirarMarco 4s ease-in-out infinite alternate;
 }
 
 
-/* =========================
-   LETRAS NEÓN
-   ========================= */
+/* ==================================================
+   SEGUNDA LÍNEA INTERIOR
+   Da más profundidad al marco
+   ================================================== */
 
-#bienvenida {
+#marco-neon::before {
+    content: "";
 
     position: absolute;
 
-    /* Empieza fuera del marco por la izquierda */
-    left: 0;
+    top: 8px;
+    bottom: 8px;
+    left: 8px;
+    right: 8px;
 
-    color: #fff4ff;
+    border-radius: 80px;
 
-    font-size: 90px;
-    font-weight: 300;
+    border: 1px solid rgba(255, 125, 220, 0.45);
 
-    white-space: nowrap;
+    box-shadow:
+        inset 0 0 10px rgba(255, 40, 200, 0.30);
 
-    text-shadow:
-        0 0 1px #ffffff,
-        0 0 2px #ffffff,
-        0 0 4px #ffeaff,
-        0 0 7px #ffb6f5,
-        0 0 10px #ff7be8,
-        0 0 16px #ff39d4,
-        0 0 25px #ff00c8,
-        0 0 40px rgba(255, 0, 200, 0.95),
-        0 0 60px rgba(255, 0, 180, 0.75);
-
-    /* MOVIMIENTO DE 12 SEGUNDOS */
-    animation: moverTexto 15s linear infinite;
+    pointer-events: none;
 }
 
 
-/* =========================
-   MOVIMIENTO
-   IZQUIERDA → DERECHA
-   ========================= */
+/* ==================================================
+   ZONA POR DONDE VIAJA EL TEXTO
+   ================================================== */
 
-@keyframes moverTexto {
+#recorrido {
+    position: absolute;
+
+    left: 0;
+    top: 0;
+
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+
+    overflow: hidden;
+}
+
+
+/* ==================================================
+   TEXTO NEÓN
+   ================================================== */
+
+#bienvenida {
+    position: absolute;
+
+    left: 0;
+
+    display: inline-block;
+
+    color: #fff7ff;
+
+    font-size: 82px;
+    font-weight: 300;
+    letter-spacing: 3px;
+
+    white-space: nowrap;
+
+    /* Núcleo + tubo rosa + halo */
+    text-shadow:
+        0 0 1px #ffffff,
+        0 0 3px #ffffff,
+        0 0 5px #ffe7fb,
+
+        0 0 8px #ffb0ed,
+        0 0 13px #ff74df,
+
+        0 0 20px #ff35ce,
+        0 0 30px #ff00bd,
+
+        0 0 45px rgba(255, 0, 190, 0.80),
+        0 0 65px rgba(255, 0, 170, 0.50);
+
+    /* Recorrido completo: 12 segundos */
+    animation:
+        desplazamiento 12s linear infinite,
+        brilloTexto 2.5s ease-in-out infinite alternate;
+
+    will-change: transform, text-shadow;
+}
+
+
+/* ==================================================
+   MOVIMIENTO
+   ================================================== */
+
+@keyframes desplazamiento {
+
+    /* Completamente oculto a la izquierda */
+    0% {
+        transform: translateX(-105%);
+    }
+
+    /* Cruza todo el cartel */
+    100% {
+        transform: translateX(1150px);
+    }
+}
+
+
+/* ==================================================
+   RESPIRACIÓN MUY SUAVE DEL TEXTO
+   ================================================== */
+
+@keyframes brilloTexto {
 
     0% {
-        transform: translateX(-100%);
+        text-shadow:
+            0 0 1px #ffffff,
+            0 0 3px #ffffff,
+            0 0 5px #ffe7fb,
+            0 0 8px #ffb0ed,
+            0 0 13px #ff74df,
+            0 0 20px #ff35ce,
+            0 0 30px #ff00bd,
+            0 0 45px rgba(255, 0, 190, 0.70),
+            0 0 60px rgba(255, 0, 170, 0.40);
     }
 
     100% {
-        transform: translateX(1100px);
+        text-shadow:
+            0 0 2px #ffffff,
+            0 0 4px #ffffff,
+            0 0 7px #fff0fd,
+            0 0 11px #ffc0f1,
+            0 0 17px #ff7fe2,
+            0 0 26px #ff35ce,
+            0 0 38px #ff00bd,
+            0 0 55px rgba(255, 0, 190, 0.85),
+            0 0 75px rgba(255, 0, 170, 0.50);
+    }
+}
+
+
+/* ==================================================
+   RESPIRACIÓN MUY SUAVE DEL MARCO
+   ================================================== */
+
+@keyframes respirarMarco {
+
+    from {
+        filter: brightness(0.92);
+    }
+
+    to {
+        filter: brightness(1.08);
     }
 }
 
@@ -115,8 +227,12 @@ body {
 
 <div id="marco-neon">
 
-    <div id="bienvenida">
-        BIENVENID@
+    <div id="recorrido">
+
+        <div id="bienvenida">
+            BIENVENID@
+        </div>
+
     </div>
 
 </div>
@@ -124,7 +240,13 @@ body {
 
 <script>
 
+/* ============================================
+   DATOS RECIBIDOS DESDE UTHERVERSE
+   ============================================ */
+
 const params = new URLSearchParams(window.location.search);
+
+const uid = params.get("uid");
 
 let nombre = params.get("name");
 
@@ -132,8 +254,13 @@ if (!nombre || nombre.trim() === "") {
     nombre = "Visitante";
 }
 
+
+/* ============================================
+   TEXTO MOSTRADO
+   ============================================ */
+
 document.getElementById("bienvenida").textContent =
-    "BIENVENID@ " + nombre;
+    "BIENVENID@  " + nombre;
 
 </script>
 
