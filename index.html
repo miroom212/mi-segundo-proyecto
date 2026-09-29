@@ -5,16 +5,24 @@
 
 <style>
 
+/* =====================================================
+   CONFIGURACIÓN GENERAL
+   ===================================================== */
+
 * {
     box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
     width: 100%;
     height: 100%;
     margin: 0;
     padding: 0;
+
     overflow: hidden;
+
+    /* FONDO 100% TRANSPARENTE */
     background: transparent !important;
 }
 
@@ -22,49 +30,88 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-family: "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
+
+    font-family:
+        "Arial Narrow",
+        "Helvetica Neue",
+        Arial,
+        sans-serif;
 }
 
 
 /* =====================================================
-   MARCO NEÓN
+   CONTENEDOR EXTERIOR
+
+   Este espacio evita que Utherverse corte
+   los laterales y el resplandor del marco.
+   ===================================================== */
+
+#contenedor {
+    position: relative;
+
+    width: calc(100% - 100px);
+    max-width: 1250px;
+
+    padding: 45px 55px;
+
+    overflow: visible;
+}
+
+
+/* =====================================================
+   MARCO PRINCIPAL DE NEÓN
    ===================================================== */
 
 #marco-neon {
     position: relative;
 
-    width: 1150px;
+    width: 100%;
     height: 175px;
 
     display: flex;
     align-items: center;
 
-    overflow: hidden;
-
     background: transparent;
 
-    border: 3px solid rgba(255, 235, 252, 0.95);
+    /*
+       IMPORTANTE:
+       No ponemos overflow:hidden aquí,
+       porque cortaría el resplandor exterior.
+    */
+
+    border: 3px solid #fff0fc;
+
     border-radius: 90px;
 
     box-shadow:
-        0 0 2px #ffffff,
-        0 0 6px #ffd9f8,
-        0 0 11px #ff9be9,
-        0 0 20px #ff4bd1,
-        0 0 35px rgba(255, 0, 190, 0.80),
-        0 0 60px rgba(255, 0, 180, 0.45),
-        0 0 90px rgba(255, 0, 170, 0.20),
 
+        /* Núcleo blanco del tubo */
+        0 0 2px #ffffff,
+        0 0 5px #ffffff,
+
+        /* Rosa claro */
+        0 0 9px #ffc2f0,
+        0 0 15px #ff87e4,
+
+        /* Rosa fuerte */
+        0 0 25px #ff42d0,
+
+        /* Halo exterior */
+        0 0 38px rgba(255, 0, 190, 0.70),
+        0 0 55px rgba(255, 0, 180, 0.40),
+
+        /* Iluminación interior */
         inset 0 0 3px #ffffff,
         inset 0 0 9px #ffb4ee,
-        inset 0 0 18px rgba(255, 20, 190, 0.60);
+        inset 0 0 18px rgba(255, 20, 190, 0.55);
 
-    animation: respirarMarco 4s ease-in-out infinite alternate;
+    animation:
+        respirarMarco 4s ease-in-out infinite alternate;
 }
 
 
 /* =====================================================
-   SEGUNDO TUBO INTERIOR
+   SEGUNDA LÍNEA DEL MARCO
    ===================================================== */
 
 #marco-neon::before {
@@ -79,18 +126,21 @@ body {
 
     border-radius: 80px;
 
-    border: 1px solid rgba(255, 145, 225, 0.45);
+    border:
+        1px solid rgba(255, 155, 228, 0.55);
 
     box-shadow:
-        0 0 5px rgba(255, 90, 215, 0.30),
+        0 0 5px rgba(255, 80, 215, 0.35),
         inset 0 0 12px rgba(255, 40, 195, 0.25);
 
     pointer-events: none;
+
+    z-index: 5;
 }
 
 
 /* =====================================================
-   REFLEJO DEL MARCO
+   REFLEJO SUPERIOR DEL MARCO
    ===================================================== */
 
 #marco-neon::after {
@@ -98,44 +148,58 @@ body {
 
     position: absolute;
 
-    left: 7%;
-    right: 7%;
-    top: 18px;
+    left: 8%;
+    right: 8%;
+
+    top: 17px;
 
     height: 1px;
 
-    background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(255,255,255,0.10),
-        rgba(255,190,240,0.60),
-        rgba(255,255,255,0.10),
-        transparent
-    );
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255,255,255,0.15),
+            rgba(255,190,240,0.70),
+            rgba(255,255,255,0.15),
+            transparent
+        );
 
     filter: blur(1px);
 
     pointer-events: none;
+
+    z-index: 5;
 }
 
 
 /* =====================================================
-   ZONA DE RECORRIDO
+   VENTANA INTERIOR
+
+   Aquí sí usamos overflow:hidden.
+
+   De esta manera:
+   - el marco NO se corta
+   - el resplandor NO se corta
+   - las letras sí desaparecen al salir
    ===================================================== */
 
 #recorrido {
     position: absolute;
 
-    left: 0;
-    top: 0;
-
-    width: 100%;
-    height: 100%;
+    left: 3px;
+    right: 3px;
+    top: 3px;
+    bottom: 3px;
 
     display: flex;
     align-items: center;
 
     overflow: hidden;
+
+    border-radius: 86px;
+
+    z-index: 2;
 }
 
 
@@ -147,9 +211,10 @@ body {
     position: absolute;
 
     /*
-       El punto de referencia está exactamente
-       en el centro del marco.
+       Punto de referencia:
+       centro exacto del marco.
     */
+
     left: 50%;
 
     color: #fff8ff;
@@ -177,14 +242,13 @@ body {
         0 0 25px #ff1fc6,
 
         /* Halo exterior */
-        0 0 38px rgba(255,0,190,0.90),
-        0 0 55px rgba(255,0,180,0.60),
-        0 0 80px rgba(255,0,170,0.30);
+        0 0 38px rgba(255,0,190,0.85),
+        0 0 55px rgba(255,0,180,0.50);
 
     /*
-       CICLO COMPLETO: 18 segundos
+       CICLO COMPLETO = 18 segundos
 
-       15 segundos de movimiento
+       15 segundos movimiento
        +
        3 segundos parado
     */
@@ -200,27 +264,27 @@ body {
 /* =====================================================
    MOVIMIENTO
 
-   ENTRA
-        ↓
-   SE CENTRA
-        ↓
-   PARA 3 SEGUNDOS
-        ↓
-   CONTINÚA
-        ↓
-   SALE
+   IZQUIERDA
+       ↓
+   CENTRO
+       ↓
+   PAUSA 3 SEGUNDOS
+       ↓
+   DERECHA
    ===================================================== */
 
 @keyframes recorridoTexto {
 
-    /* Fuera completamente por la izquierda */
+    /* Totalmente fuera por la izquierda */
+
     0% {
         transform:
             translateX(calc(-575px - 100%));
     }
 
 
-    /* Llega exactamente al centro */
+    /* Llega al centro */
+
     41.666% {
         transform:
             translateX(-50%);
@@ -228,9 +292,12 @@ body {
 
 
     /*
-       Permanece en la misma posición
-       durante 3 segundos
+       PAUSA
+
+       Mantiene exactamente la misma
+       posición durante 3 segundos.
     */
+
     58.333% {
         transform:
             translateX(-50%);
@@ -238,6 +305,7 @@ body {
 
 
     /* Sale completamente por la derecha */
+
     100% {
         transform:
             translateX(575px);
@@ -246,13 +314,15 @@ body {
 
 
 /* =====================================================
-   BRILLO SUAVE DEL TEXTO
+   RESPIRACIÓN DEL TEXTO
    ===================================================== */
 
 @keyframes respirarTexto {
 
     from {
+
         text-shadow:
+
             0 0 1px #ffffff,
             0 0 2px #ffffff,
             0 0 4px #fff5ff,
@@ -263,13 +333,15 @@ body {
             0 0 17px #ff55d7,
             0 0 25px #ff1fc6,
 
-            0 0 38px rgba(255,0,190,0.75),
-            0 0 55px rgba(255,0,180,0.45),
-            0 0 75px rgba(255,0,170,0.20);
+            0 0 38px rgba(255,0,190,0.70),
+            0 0 50px rgba(255,0,180,0.40);
     }
 
+
     to {
+
         text-shadow:
+
             0 0 2px #ffffff,
             0 0 4px #ffffff,
             0 0 6px #fff5ff,
@@ -280,29 +352,55 @@ body {
             0 0 21px #ff60dc,
             0 0 31px #ff20ca,
 
-            0 0 45px rgba(255,0,195,0.90),
-            0 0 65px rgba(255,0,180,0.60),
-            0 0 90px rgba(255,0,170,0.30);
+            0 0 45px rgba(255,0,195,0.85),
+            0 0 60px rgba(255,0,180,0.50);
     }
 }
 
 
 /* =====================================================
-   BRILLO SUAVE DEL MARCO
+   RESPIRACIÓN SUAVE DEL MARCO
    ===================================================== */
 
 @keyframes respirarMarco {
 
     from {
         filter:
-            brightness(0.95)
-            saturate(0.96);
+            brightness(0.96)
+            saturate(0.97);
     }
 
     to {
         filter:
-            brightness(1.06)
-            saturate(1.05);
+            brightness(1.05)
+            saturate(1.04);
+    }
+}
+
+
+/* =====================================================
+   ADAPTACIÓN PARA PANTALLAS PEQUEÑAS
+   ===================================================== */
+
+@media (max-width: 900px) {
+
+    #contenedor {
+        width: calc(100% - 40px);
+
+        padding:
+            30px 25px;
+    }
+
+    #marco-neon {
+        height: 150px;
+    }
+
+    #recorrido {
+        border-radius: 73px;
+    }
+
+    #bienvenida {
+        font-size: 65px;
     }
 }
 
@@ -313,12 +411,32 @@ body {
 <body>
 
 
-<div id="marco-neon">
+<!-- ==================================================
+     CONTENEDOR DE SEGURIDAD
+     ================================================== -->
 
-    <div id="recorrido">
+<div id="contenedor">
 
-        <div id="bienvenida">
-            BIENVENID@
+
+    <!-- MARCO -->
+
+    <div id="marco-neon">
+
+
+        <!-- ZONA POR DONDE PASAN LAS LETRAS -->
+
+        <div id="recorrido">
+
+
+            <!-- TEXTO -->
+
+            <div id="bienvenida">
+
+                BIENVENID@
+
+            </div>
+
+
         </div>
 
     </div>
@@ -326,93 +444,113 @@ body {
 </div>
 
 
+
 <script>
 
 /* =====================================================
-   RECIBIR DATOS DE UTHERVERSE
+   DATOS QUE LLEGAN DESDE UTHERVERSE
    ===================================================== */
 
 const params =
     new URLSearchParams(window.location.search);
 
+
 let nombre =
     params.get("name");
+
 
 const uid =
     params.get("uid");
 
 
-/* Si Utherverse no manda un nombre */
+/* =====================================================
+   SI NO RECIBIMOS NOMBRE
+   ===================================================== */
 
 if (!nombre || nombre.trim() === "") {
+
     nombre = "Visitante";
+
 }
 
 
 /* =====================================================
-   MOSTRAR EL NOMBRE
+   MOSTRAR MENSAJE
    ===================================================== */
 
 const texto =
     document.getElementById("bienvenida");
+
+
+const marco =
+    document.getElementById("marco-neon");
+
 
 texto.textContent =
     "BIENVENID@  " + nombre;
 
 
 /* =====================================================
-   AJUSTE AUTOMÁTICO PARA NOMBRES LARGOS
+   AJUSTE AUTOMÁTICO DEL TAMAÑO
 
-   Si el nombre es demasiado largo,
-   reduce las letras automáticamente
-   hasta que todo entre dentro del marco.
+   Si el nombre es largo, reducimos las letras
+   para que durante la pausa se vea TODO
+   dentro del marco.
    ===================================================== */
 
 function ajustarTexto() {
 
-    const marco =
-        document.getElementById("marco-neon");
+    /*
+       Tamaño inicial
+    */
 
-    /* Tamaño normal */
     let tamaño = 82;
+
 
     texto.style.fontSize =
         tamaño + "px";
 
 
     /*
-       Dejamos 100 píxeles de margen:
-       50 izquierda + 50 derecha
+       Dejamos 70px libres a cada lado
+       cuando el texto está centrado.
     */
 
     const anchoMaximo =
-        marco.clientWidth - 100;
+        marco.clientWidth - 140;
 
 
     /*
-       Reducimos progresivamente
-       hasta que todo el mensaje entre.
+       Reducimos el tamaño poco a poco
+       hasta que entre completamente.
     */
 
     while (
         texto.scrollWidth > anchoMaximo &&
-        tamaño > 42
+        tamaño > 38
     ) {
 
         tamaño--;
 
         texto.style.fontSize =
             tamaño + "px";
+
     }
+
 }
 
 
-/* Ejecutar al cargar */
+/* =====================================================
+   EJECUTAR AJUSTE
+   ===================================================== */
 
-ajustarTexto();
+requestAnimationFrame(
+    ajustarTexto
+);
 
 
-/* Recalcular si cambia el tamaño */
+/* Si Utherverse cambia el tamaño
+   de la superficie, recalculamos */
 
 window.addEventListener(
     "resize",
