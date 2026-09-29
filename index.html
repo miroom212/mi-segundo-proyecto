@@ -6,7 +6,7 @@
 <style>
 
 /* =====================================================
-   CONFIGURACIÓN GENERAL
+   GENERAL
    ===================================================== */
 
 * {
@@ -19,10 +19,9 @@ body {
     height: 100%;
     margin: 0;
     padding: 0;
-
     overflow: hidden;
 
-    /* FONDO 100% TRANSPARENTE */
+    /* FONDO TRANSPARENTE */
     background: transparent !important;
 }
 
@@ -40,10 +39,9 @@ body {
 
 
 /* =====================================================
-   CONTENEDOR EXTERIOR
+   CONTENEDOR DE SEGURIDAD
 
-   Este espacio evita que Utherverse corte
-   los laterales y el resplandor del marco.
+   Evita que se corte el neón del marco.
    ===================================================== */
 
 #contenedor {
@@ -59,7 +57,7 @@ body {
 
 
 /* =====================================================
-   MARCO PRINCIPAL DE NEÓN
+   MARCO NEÓN
    ===================================================== */
 
 #marco-neon {
@@ -73,19 +71,12 @@ body {
 
     background: transparent;
 
-    /*
-       IMPORTANTE:
-       No ponemos overflow:hidden aquí,
-       porque cortaría el resplandor exterior.
-    */
-
     border: 3px solid #fff0fc;
-
     border-radius: 90px;
 
     box-shadow:
 
-        /* Núcleo blanco del tubo */
+        /* Núcleo blanco */
         0 0 2px #ffffff,
         0 0 5px #ffffff,
 
@@ -93,14 +84,14 @@ body {
         0 0 9px #ffc2f0,
         0 0 15px #ff87e4,
 
-        /* Rosa fuerte */
+        /* Rosa intenso */
         0 0 25px #ff42d0,
 
         /* Halo exterior */
         0 0 38px rgba(255, 0, 190, 0.70),
         0 0 55px rgba(255, 0, 180, 0.40),
 
-        /* Iluminación interior */
+        /* Brillo interior */
         inset 0 0 3px #ffffff,
         inset 0 0 9px #ffb4ee,
         inset 0 0 18px rgba(255, 20, 190, 0.55);
@@ -140,7 +131,7 @@ body {
 
 
 /* =====================================================
-   REFLEJO SUPERIOR DEL MARCO
+   REFLEJO SUPERIOR
    ===================================================== */
 
 #marco-neon::after {
@@ -150,7 +141,6 @@ body {
 
     left: 8%;
     right: 8%;
-
     top: 17px;
 
     height: 1px;
@@ -174,14 +164,10 @@ body {
 
 
 /* =====================================================
-   VENTANA INTERIOR
+   ZONA INTERIOR DEL MARCO
 
-   Aquí sí usamos overflow:hidden.
-
-   De esta manera:
-   - el marco NO se corta
-   - el resplandor NO se corta
-   - las letras sí desaparecen al salir
+   Aquí se ocultan las letras cuando están fuera,
+   pero NO se corta el resplandor exterior del marco.
    ===================================================== */
 
 #recorrido {
@@ -210,11 +196,7 @@ body {
 #bienvenida {
     position: absolute;
 
-    /*
-       Punto de referencia:
-       centro exacto del marco.
-    */
-
+    /* Centro exacto del marco */
     left: 50%;
 
     color: #fff8ff;
@@ -228,7 +210,7 @@ body {
 
     text-shadow:
 
-        /* Núcleo blanco */
+        /* Centro blanco */
         0 0 1px #ffffff,
         0 0 2px #ffffff,
         0 0 4px #fff5ff,
@@ -237,20 +219,24 @@ body {
         0 0 7px #ffc6f2,
         0 0 11px #ff94e7,
 
-        /* Rosa intenso */
+        /* Rosa fuerte */
         0 0 17px #ff55d7,
         0 0 25px #ff1fc6,
 
-        /* Halo exterior */
+        /* Halo */
         0 0 38px rgba(255,0,190,0.85),
         0 0 55px rgba(255,0,180,0.50);
 
     /*
-       CICLO COMPLETO = 18 segundos
+       IMPORTANTE:
 
-       15 segundos movimiento
-       +
-       3 segundos parado
+       linear = movimiento constante.
+
+       No acelera.
+       No frena.
+       No hace pausas intermedias.
+
+       Solo para en el centro.
     */
 
     animation:
@@ -264,18 +250,29 @@ body {
 /* =====================================================
    MOVIMIENTO
 
-   IZQUIERDA
-       ↓
-   CENTRO
-       ↓
-   PAUSA 3 SEGUNDOS
-       ↓
-   DERECHA
+   0% ----------> entra
+
+                  ↓
+
+   41.666% ------> CENTRO
+
+                  PAUSA 3 SEGUNDOS
+
+   58.333% ------> continúa
+
+                  ↓
+
+   100% ---------> sale
+
    ===================================================== */
 
 @keyframes recorridoTexto {
 
-    /* Totalmente fuera por la izquierda */
+    /* ==========================================
+       INICIO
+
+       Texto completamente fuera por la izquierda
+       ========================================== */
 
     0% {
         transform:
@@ -283,28 +280,37 @@ body {
     }
 
 
-    /* Llega al centro */
+    /* ==========================================
+       LLEGA AL CENTRO
 
-    41.666% {
+       Movimiento constante hasta aquí
+       ========================================== */
+
+    41.6667% {
         transform:
             translateX(-50%);
     }
 
 
-    /*
-       PAUSA
+    /* ==========================================
+       PAUSA DE 3 SEGUNDOS
 
-       Mantiene exactamente la misma
-       posición durante 3 segundos.
-    */
+       EXACTAMENTE la misma posición.
+       Todo el texto queda visible.
+       ========================================== */
 
-    58.333% {
+    58.3333% {
         transform:
             translateX(-50%);
     }
 
 
-    /* Sale completamente por la derecha */
+    /* ==========================================
+       SALIDA
+
+       Continúa a velocidad constante
+       hacia la derecha.
+       ========================================== */
 
     100% {
         transform:
@@ -314,13 +320,15 @@ body {
 
 
 /* =====================================================
-   RESPIRACIÓN DEL TEXTO
+   BRILLO SUAVE DE LAS LETRAS
+
+   Esto NO afecta al movimiento.
+   Solo cambia ligeramente la iluminación.
    ===================================================== */
 
 @keyframes respirarTexto {
 
     from {
-
         text-shadow:
 
             0 0 1px #ffffff,
@@ -339,7 +347,6 @@ body {
 
 
     to {
-
         text-shadow:
 
             0 0 2px #ffffff,
@@ -359,7 +366,7 @@ body {
 
 
 /* =====================================================
-   RESPIRACIÓN SUAVE DEL MARCO
+   BRILLO SUAVE DEL MARCO
    ===================================================== */
 
 @keyframes respirarMarco {
@@ -379,7 +386,7 @@ body {
 
 
 /* =====================================================
-   ADAPTACIÓN PARA PANTALLAS PEQUEÑAS
+   PANTALLAS PEQUEÑAS
    ===================================================== */
 
 @media (max-width: 900px) {
@@ -411,31 +418,15 @@ body {
 <body>
 
 
-<!-- ==================================================
-     CONTENEDOR DE SEGURIDAD
-     ================================================== -->
-
 <div id="contenedor">
-
-
-    <!-- MARCO -->
 
     <div id="marco-neon">
 
-
-        <!-- ZONA POR DONDE PASAN LAS LETRAS -->
-
         <div id="recorrido">
 
-
-            <!-- TEXTO -->
-
             <div id="bienvenida">
-
                 BIENVENID@
-
             </div>
-
 
         </div>
 
@@ -448,7 +439,7 @@ body {
 <script>
 
 /* =====================================================
-   DATOS QUE LLEGAN DESDE UTHERVERSE
+   DATOS DE UTHERVERSE
    ===================================================== */
 
 const params =
@@ -464,7 +455,7 @@ const uid =
 
 
 /* =====================================================
-   SI NO RECIBIMOS NOMBRE
+   SI NO RECIBE NOMBRE
    ===================================================== */
 
 if (!nombre || nombre.trim() === "") {
@@ -475,7 +466,7 @@ if (!nombre || nombre.trim() === "") {
 
 
 /* =====================================================
-   MOSTRAR MENSAJE
+   MOSTRAR NOMBRE
    ===================================================== */
 
 const texto =
@@ -491,29 +482,20 @@ texto.textContent =
 
 
 /* =====================================================
-   AJUSTE AUTOMÁTICO DEL TAMAÑO
-
-   Si el nombre es largo, reducimos las letras
-   para que durante la pausa se vea TODO
-   dentro del marco.
+   AJUSTAR AUTOMÁTICAMENTE NOMBRES LARGOS
    ===================================================== */
 
 function ajustarTexto() {
 
-    /*
-       Tamaño inicial
-    */
-
     let tamaño = 82;
-
 
     texto.style.fontSize =
         tamaño + "px";
 
 
     /*
-       Dejamos 70px libres a cada lado
-       cuando el texto está centrado.
+       Dejamos margen a izquierda
+       y derecha cuando está parado.
     */
 
     const anchoMaximo =
@@ -521,8 +503,8 @@ function ajustarTexto() {
 
 
     /*
-       Reducimos el tamaño poco a poco
-       hasta que entre completamente.
+       Si el nombre es largo,
+       reduce automáticamente el tamaño.
     */
 
     while (
@@ -540,17 +522,14 @@ function ajustarTexto() {
 }
 
 
-/* =====================================================
-   EJECUTAR AJUSTE
-   ===================================================== */
+/* Ajustar al cargar */
 
 requestAnimationFrame(
     ajustarTexto
 );
 
 
-/* Si Utherverse cambia el tamaño
-   de la superficie, recalculamos */
+/* Reajustar si cambia el tamaño */
 
 window.addEventListener(
     "resize",
